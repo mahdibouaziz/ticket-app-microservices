@@ -6,6 +6,10 @@ const app = express();
 // bosy parser
 app.use(json());
 
+app.get("/api/users/currentuser", (req, res, err) => {
+  res.send("Hi there");
+});
+
 app.listen(3000, () => {
   console.log("auth - listening on port 3000");
 });
