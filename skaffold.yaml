@@ -1,0 +1,19 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+build:
+  local:
+    push: false #don't push the images to docker hub
+  artifacts:
+    - image: mahdibouaziz/auth #the real image you are searchng for
+      context: auth #the folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts" #the items to sync
+            dest: . #where to sync our files inside of the container
+
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
