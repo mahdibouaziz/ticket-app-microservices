@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
+import jwt from "jsonwebtoken";
 import { BadRequestError } from "../errors/bad-request-error";
 import { RequestValidationError } from "../errors/request-validation-error";
 import { User } from "../models/user";
@@ -32,11 +33,18 @@ router.post(
       throw new BadRequestError("Email already exists");
     }
 
-    // hash the password
-
     // create the user and save it to the db
     const user = User.build({ email, password });
     await user.save();
+
+    // generate the jwt
+    const userJwt = await jwt.sign({ id: user.id, email: user.email }, "asdf");
+
+    // store jwt on the session object
+    req.session = {
+      jwt: userJwt,
+    };
+
     res.status(201).send(user);
   }
 );
