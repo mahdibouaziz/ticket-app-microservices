@@ -5,9 +5,12 @@ import { app } from "../app";
 let mongo: any;
 
 beforeAll(async () => {
+  //prepare the eenv variables needed in the app
+  process.env.JWT_KEY = "qfqdsfqsdf";
+
   // create memory db and connect to it
-  mongo = new MongoMemoryServer();
-  const mongoUri = await mongo.getUri();
+  mongo = await MongoMemoryServer.create();
+  const mongoUri = mongo.getUri();
 
   await mongoose.connect(mongoUri);
 });
