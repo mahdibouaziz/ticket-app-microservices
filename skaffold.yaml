@@ -12,6 +12,14 @@ build:
         manual:
           - src: "src/**/*.ts" #the items to sync
             dest: . #where to sync our files inside of the container
+    - image: mahdibouaziz/client #the real image you are searchng for
+      context: client #the folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js" #the items to sync
+            dest: . #where to sync our files inside of the container
 
 deploy:
   kubectl:
