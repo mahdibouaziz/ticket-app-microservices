@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div>IndexJS</div>;
+  return <div>IndexJS2</div>;
 }
